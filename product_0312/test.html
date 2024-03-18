@@ -120,7 +120,7 @@
             width: 100%;
             height: 100%;
             top: 0px;
-            pointer-events: none;
+            /* pointer-events: none; */
             position: fixed;
             z-index: 50;
         }
@@ -133,8 +133,6 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            position: fixed;
-            z-index: 50;
         }
 
         #wnd_store_add {
@@ -168,11 +166,18 @@
         #area_store_info {
             width: 80%;
             height: 80%;
+            max-height: 500px;
             /* background-color: white; */
             border-radius: 10px;
             top: 50%;
             left: 50%;
+            position: absolute;
             transform: translate(-50%, -50%);
+        }
+
+        #wnd_store_info .bg_store_info {
+            height: 100%;
+            width: 100%;
         }
 
         #wnd_store_info .area_title {
@@ -206,17 +211,18 @@
             cursor: pointer;
         }
 
-        .area_info h3, p {
+        .area_info h3,
+        p {
             width: max-content;
-            padding: 0 0 5px 5% ;
+            padding: 0 0 5px 5%;
             margin: 0px;
         }
 
         .btn_cancel {
-            position: relative;
+            position: absolute;
             height: 50px;
             width: 30%;
-            bottom: -30px;
+            bottom: 40px;
             left: 15%;
             background-color: #FF2400;
             padding: 10px 0 0 0;
@@ -226,10 +232,10 @@
         }
 
         .btn_confirm {
-            position: relative;
+            position: absolute;
             height: 50px;
             width: 30%;
-            bottom: 20px;
+            bottom: 40px;
             left: 55%;
             background-color: #007FFF;
             padding: 10px 0 0 0;
@@ -246,9 +252,49 @@
 
         .text_hint {
             position: relative;
+            font-size: 24px;
             top: 25px;
-            color: #FF000000;
+            color: #FF0000;
             height: 34.78px;
+        }
+
+        .store_pic_left {
+            left: -100%;
+        }
+
+        .store_pic_mid {
+            left: 0%;
+        }
+
+        .store_pic_right {
+            left: 100%;
+        }
+
+        .store_pic_transition {
+            transition: 0.5s;
+        }
+
+        .store_pic_btn_left {
+            position: absolute;
+            height: 100%;
+            width: 50%;
+        }
+
+        .store_pic_btn_right {
+            position: absolute;
+            height: 100%;
+            width: 50%;
+            left: 50%;
+        }
+
+        .store_pic_btn_left:hover {
+            background: linear-gradient(to right, orange, rgba(255, 255, 255, 0));
+
+        }
+
+        .store_pic_btn_right:hover {
+            background: linear-gradient(to left, orange, rgba(255, 255, 255, 0));
+
         }
 
         .ani_fade_in {
@@ -294,8 +340,9 @@
             display: inline-block;
             margin-right: 5px;
             margin-left: 5px;
-            height: 20px;
-            width: 20px;
+            padding-top: 2px;
+            height: 18px;
+            width: 18px;
             background-color: #fff;
             border-radius: 5px;
             cursor: pointer;
@@ -419,7 +466,7 @@
         }
 
         .icon_filter:has(input:checked)~#area_list th {
-            top: 181.5px;
+            top: 161.5px;
         }
 
         .container {
@@ -492,12 +539,18 @@
             height: 80px;
             top: -45px;
             z-index: -1;
-            clip-path: inset(60px 5px 20px 5px round 20px 20px 0 0);
+            clip-path: inset(70px 5px 15px 5px round 20px 20px 0 0);
             transition: 0.2s;
         }
 
         .area_menu .toggle:hover .icon_bg {
-            clip-path: inset(5px 5px 19px 5px round 20px 20px 0 0);
+            clip-path: inset(10px 5px 15px 5px round 20px 20px 0 0);
+        }
+
+        .btn_list:has(input:checked) .icon_bg,
+        .btn_roulette:has(input:checked) .icon_bg,
+        .btn_contact:has(input:checked) .icon_bg {
+            clip-path: inset(10px 5px 15px 5px round 20px 20px 0 0);
         }
 
         .btn_about {
@@ -521,7 +574,7 @@
             background-color: #0051BA;
             color: #ffffff;
             width: 25vw;
-            /* height: 75px; */
+            height: 30px;
             position: sticky;
             top: 60px;
             z-index: 2;
@@ -567,7 +620,7 @@
             transition: 0.5s;
             position: absolute;
             height: 5px;
-            top: 27px;
+            top: 25px;
             background-color: #FF8C00;
             clip-path: inset(5px 0 0 0 round 5px 5px 0 0);
         }
@@ -601,12 +654,21 @@
     <header>
         <div class="container area_menu">
             <!-- <p>Copyright &copy;</p> -->
-            <div class="btn_list toggle">店家列表<div class="icon_bg"></div>
-            </div>
-            <div class="btn_roulette toggle">START<div class="icon_bg"></div>
-            </div>
-            <div class="btn_contact toggle">聯絡我們<div class="icon_bg"></div>
-            </div>
+            <label class="btn_list toggle" onclick="toggle_menu_display()">
+                店家列表
+                <div class="icon_bg"></div>
+                <input type="radio" name="toggle_menu" style="display: none;">
+            </label>
+            <label class="btn_roulette toggle" onclick="toggle_menu_display()">
+                START
+                <div class="icon_bg"></div>
+                <input type="radio" name="toggle_menu" style="display: none;">
+            </label>
+            <label class="btn_contact toggle" onclick="toggle_menu_display()">
+                聯絡我們
+                <div class="icon_bg"></div>
+                <input type="radio" name="toggle_menu" style="display: none;">
+            </label>
         </div>
         <div class="btn_about "><i class="fa-regular fa-circle-question"></i></div>
     </header>
@@ -621,11 +683,11 @@
     <div id="btn_back"></div>
     <!-- 確認視窗 -->
     <div id="wnd_confirm">
-        <div id="area_confirm">
-            <div class="area_title"></div>
-            <div class="area_info">
-                恭喜獲得
-            </div>
+        <div id="area_confirm" class="area_info">
+            <div class="area_title">標題</div>
+            <div class="text_content">訊息</div>
+            <div class="btn_cancel" onclick="fade_out(wnd_confirm)">取消</div>
+            <div class="btn_confirm" onclick="fade_out(wnd_confirm); confirm_event()">確定</div>
         </div>
     </div>
 
@@ -639,7 +701,7 @@
             <br>
             <label>電話：<input type="text"></label>
             <br>
-            <label class="text_hint">empty</label>
+            <div class="text_hint"></div>
             <div class="btn_cancel" onclick="fade_out(wnd_store_add)">取消</div>
             <div class="btn_confirm" onclick="add_new_data(wnd_store_add)">新增</div>
         </div>
@@ -647,18 +709,20 @@
 
     <!-- 店家資訊 -->
     <div id="wnd_store_info">
+        <div class="bg_store_info" onclick="fade_out(wnd_store_info)"></div>
         <div id="area_store_info" class="area_info">
             <div class="area_title">店家資訊</div>
             <h3>店家名稱</h3>
-            <p>電話：<spwn>123</spwn>
+            <p>電話：<span>123</span>
             </p>
-            <p>評價：<spwn>123</spwn>
+            <p>評價：<span>123</span>
             </p>
-            <p>地址：<spwn>123</spwn>
+            <p>地址：<span>123</span>
             </p>
-            <p>價位：<spwn>123</spwn>
+            <p>價位：<span>123</span>
             </p>
-            <div></div>
+            <div class="store_pic"></div>
+            <div class="store_map">地圖</div>
         </div>
     </div>
 
@@ -669,10 +733,12 @@
     <div class="area_data_filter container">
         <div>
             類型：
-            <label><input type="checkbox" id="check_type1" onchange="get_data()"><span
-                    class="checkmark"></span>中式</label>
-            <label><input type="checkbox" id="check_type2" onchange="get_data()"><span
-                    class="checkmark"></span>西式</label>
+            <label><input type="checkbox" id="check_type1" onchange="get_data()">
+                <span class="checkmark"></span>中式
+            </label>
+            <label><input type="checkbox" id="check_type2" onchange="get_data()">
+                <span class="checkmark"></span>西式
+            </label>
         </div>
         <div>
             評價：
@@ -681,10 +747,12 @@
         </div>
         <div>
             時段：
-            <label><input type="checkbox" id="check_time1" onchange="get_data()"><span
-                    class="checkmark"></span>早上</label>
-            <label><input type="checkbox" id="check_time2" onchange="get_data()"><span
-                    class="checkmark"></span>中午</label>
+            <label><input type="checkbox" id="check_time1" onchange="get_data()">
+                <span class="checkmark"></span>早上
+            </label>
+            <label><input type="checkbox" id="check_time2" onchange="get_data()">
+                <span class="checkmark"></span>中午
+            </label>
         </div>
         <div>
             價位：
@@ -694,14 +762,20 @@
         </div>
         <div>
             葷素：
-            <label><input type="checkbox" id="check_mv1" onchange="get_data()"><span class="checkmark"></span>葷食</label>
-            <label><input type="checkbox" id="check_mv2" onchange="get_data()"><span class="checkmark"></span>素食</label>
+            <label><input type="checkbox" id="check_mv1" onchange="get_data()">
+                <span class="checkmark"></span>葷食
+            </label>
+            <label><input type="checkbox" id="check_mv2" onchange="get_data()">
+                <span class="checkmark"></span>素食
+            </label>
         </div>
         <div class="area_edit">
-            <label onclick="fade_in(wnd_store_add); initail_wnd_store_add();"><i
-                    class="fa-solid fa-plus">新增店家</i></label>
-            <label onclick="set_list_delete_toggle(this);">
-                <i class="fa-solid fa-trash">移除店家</i></label>
+            <label onclick="fade_in(wnd_store_add); initail_wnd_store_add();">
+                <i class="fa-solid fa-plus">新增店家</i>
+            </label>
+            <label onclick="set_list_delete_toggle(this);" id="toggle_delete">
+                <i class="fa-solid fa-trash">移除店家</i>
+            </label>
         </div>
 
 
@@ -714,13 +788,15 @@
     </footer>
     <!-- JS -->
     <script>
-
-
         //變數宣告
         //介面相關變數
         var btn = document.getElementById("trunButton");
         var trun_table = document.getElementById("trunTable");
         var area_list = document.getElementById("area_list");
+        var toggle_delete = document.getElementById("toggle_delete");
+        var toggle_list = document.querySelector(".btn_list");
+        var toggle_roulette = document.querySelector(".btn_roulette");
+        var toggle_contact = document.querySelector(".btn_contact");
         // var _login = document.getElementById("_login");
         // var _input = document.getElementById("_input");
 
@@ -729,10 +805,13 @@
         var wnd_confirm = document.getElementById("wnd_confirm");
         var area_confirm = document.getElementById("area_confirm");
         var wnd_store_add = document.getElementById("wnd_store_add");
+        var wnd_store_info = document.getElementById("wnd_store_info");
 
         //資料相關變數
         var data_arr;
         var data_arr_result = [];
+        var confirm_type;
+        var delete_data;
 
         //輪盤相關變數
         var _keyframes = document.styleSheets[2].cssRules[5];
@@ -989,7 +1068,7 @@
             for (let i = 0; i < data_arr_result.length; i++) {
                 var trobj = document.createElement("tr");
                 for (let j = 0; j < data_arr_result[i].length; j++) {
-                    if (j == 2 || j == 4 || j == 5 || j == 8) {
+                    if (j == 2 || j == 4 || j == 5 || j == 8 || j == 9 || j == 10) {
                         continue;
                     }
                     var tdobj = document.createElement("td");
@@ -1004,7 +1083,8 @@
                         for (let l = 0; l < data_arr_result[i][j]; l++) {
                             tdobj.innerHTML += '<i class="fa-solid fa-dollar-sign golden"></i>';
                         }
-                    } else {
+                    }
+                    else {
                         tdobj.innerHTML = data_arr_result[i][j];
                     }
                     trobj.appendChild(tdobj);
@@ -1012,10 +1092,22 @@
                 newdiv = document.createElement("div");
                 newdiv.innerHTML += '<i class="fa-solid fa-square-minus"></i>';
                 newdiv.style.display = "none";
+                newdiv.style.position = "absolute";
+                newdiv.style.left = "88%";
                 newdiv.className = "btn_delete";
                 trobj.appendChild(newdiv);
 
-                trobj.addEventListener('click', function () { get_store(this); });
+                trobj.addEventListener('click', function () {
+                    if (toggle_delete.classList.contains("list_delete")) {
+                        fade_in(wnd_confirm);
+                        set_confirm(0, "移除資料", "是否要刪除" + get_store(this)[1]);
+                        confirm_type = "delete";
+                        delete_data = this;
+                    } else {
+                        fade_in(wnd_store_info);
+                        set_store_data(get_store(this));
+                    }
+                });
                 area_list.appendChild(trobj);
             }
             // console.log(area_list);
@@ -1089,18 +1181,20 @@
             }
         }
 
-        function get_store(row, arr = data_arr_result) {
+        function get_store(row, type = 0, arr = data_arr_result) {
             let target = row.querySelector('td').innerHTML;
             let left = 0;
             let right = arr.length - 1;
-
             while (left <= right) {
                 let mid = Math.floor((left + right) / 2);
-
                 if (arr[mid][0] === target) {
-                    console.table(arr[mid]);
-                    return mid; // 找到目标，返回索引
-                } else if (arr[mid][0] < target) {
+                    // console.table(arr[mid]);
+                    if (type == 0) {
+                        return arr[mid]; // 找到目标，返回索引
+                    } else {
+                        return mid;
+                    }
+                } else if (parseInt(arr[mid][0]) < parseInt(target)) {
                     left = mid + 1; // 目标在右半部分
                 } else {
                     right = mid - 1; // 目标在左半部分
@@ -1116,13 +1210,13 @@
 
                 for (let i = 1; i < document.getElementById("area_list").rows.length; i++) {
 
-                    parentRect = document.getElementById("area_list").rows[i].getBoundingClientRect();
+                    // parentRect = document.getElementById("area_list").rows[i].getBoundingClientRect();
                     childElement = document.getElementById("area_list").rows[i].querySelector(".btn_delete");
-                    childTop = parentRect.top;
-                    childRight = document.documentElement.clientWidth - parentRect.right;
+                    // childTop = parentRect.top;
+                    // childRight = document.documentElement.clientWidth - parentRect.right;
 
-                    childElement.style.top = childTop + "px";
-                    childElement.style.right = childRight + "px";
+                    // childElement.style.top = childTop + "px";
+                    // childElement.style.right = childRight + "px";
                     childElement.style.display = 'none';
                     childElement.classList.remove("btn_delete_on")
                 }
@@ -1131,13 +1225,13 @@
 
                 for (let i = 1; i < document.getElementById("area_list").rows.length; i++) {
 
-                    parentRect = document.getElementById("area_list").rows[i].getBoundingClientRect();
+                    // parentRect = document.getElementById("area_list").rows[i].getBoundingClientRect();
                     childElement = document.getElementById("area_list").rows[i].querySelector(".btn_delete");
-                    childTop = parentRect.top;
-                    childRight = document.documentElement.clientWidth - parentRect.right;
+                    // childTop = parentRect.top;
+                    // childRight = document.documentElement.clientWidth - parentRect.right;
 
-                    childElement.style.top = childTop + "px";
-                    childElement.style.right = childRight + "px";
+                    // childElement.style.top = childTop + "px";
+                    // childElement.style.right = childRight + "px";
                     childElement.style.display = 'block';
                     childElement.classList.add("btn_delete_on");
                 }
@@ -1151,7 +1245,7 @@
                 wnd_store_add.querySelector(".text_hint").style.color = "#FF0000";
             } else {
                 if (data_arr[data_arr.length - 1][0] < 10000) {
-                    data_arr.push(["10001", wnd_store_add.querySelector("input").value, "", "", "", "", "", "", ""]);
+                    data_arr.push(["10001", wnd_store_add.querySelector("input").value, "", "", "", "", "", "", wnd_store_add.querySelectorAll("input")[1].value, wnd_store_add.querySelectorAll("input")[2].value, ""]);
                 } else {
                     data_arr.push([(parseInt(data_arr[data_arr.length - 1][0]) + 1).toString(), wnd_store_add.querySelector("input").value, "", "", "", "", "", "", ""]);
                 }
@@ -1159,6 +1253,165 @@
                 // console.log(data_arr.length);
                 fade_out(ui);
                 get_data();
+            }
+        }
+
+        function set_store_data(value) {
+            var name, phone, comm, addr, price, pic, map, obj;
+            // console.table(value);
+            name = wnd_store_info.querySelector("h3");
+            phone = wnd_store_info.querySelectorAll("span")[0];
+            comm = wnd_store_info.querySelectorAll("span")[1];
+            addr = wnd_store_info.querySelectorAll("span")[2];
+            price = wnd_store_info.querySelectorAll("span")[3];
+            pic = wnd_store_info.querySelector(".store_pic");
+            map = wnd_store_info.querySelector(".store_map");
+
+            name.innerHTML = value[1];
+            phone.innerHTML = value[8];
+            addr.innerHTML = value[9];
+
+            comm.innerHTML = "";
+            for (let i = 0; i < value[6]; i++) {
+                comm.innerHTML += '<i class="fa-solid fa-star golden"></i>';
+            }
+            price.innerHTML = "";
+            for (let i = 0; i < value[7]; i++) {
+                price.innerHTML += '<i class="fa-solid fa-dollar-sign golden"></i>';
+            }
+
+            pic.style.height = "135px";
+            pic.style.width = "240px";
+            pic.style.position = "absolute";
+            pic.style.right = "30px";
+            pic.style.top = "40px";
+            pic.style.overflow = "hidden";
+            if (value[5] == "") {
+                pic.innerHTML = '<img src=""><img src=""><img src=""><div></div><div></div>';
+                pic.querySelectorAll("img")[0].src = "https://placehold.co/240x135?text=Error+404";
+                pic.querySelectorAll("img")[1].src = "https://placehold.co/240x135/EEE/31343C?font=raleway&text=(╯°Д°)╯+┻━┻";
+                pic.querySelectorAll("img")[2].src = "https://placehold.co/240x135?text=Not+Found";
+                pic.querySelectorAll("img")[0].style.position = "absolute";
+                pic.querySelectorAll("img")[1].style.position = "absolute";
+                pic.querySelectorAll("img")[2].style.position = "absolute";
+                pic.querySelectorAll("img")[0].classList = "store_pic_left";
+                pic.querySelectorAll("img")[1].classList = "store_pic_mid";
+                pic.querySelectorAll("img")[2].classList = "store_pic_right";
+
+
+                pic.querySelectorAll("div")[0].classList = "store_pic_btn_left";
+                pic.querySelectorAll("div")[1].classList = "store_pic_btn_right";
+                pic.querySelectorAll("div")[0].addEventListener("click", function () {
+                    for (let i = 0; i < 3; i++) {
+                        if (pic.querySelectorAll("img")[i].classList.contains("store_pic_transition")) {
+                            pic.querySelectorAll("img")[i].classList.remove("store_pic_transition");
+                        }
+                        if (pic.querySelectorAll("img")[i].classList.contains("store_pic_left")) {
+                            pic.querySelectorAll("img")[i].classList.remove("store_pic_left");
+                            pic.querySelectorAll("img")[i].classList.add("store_pic_right");
+                        } else if (pic.querySelectorAll("img")[i].classList.contains("store_pic_mid")) {
+                            pic.querySelectorAll("img")[i].classList.remove("store_pic_mid");
+                            pic.querySelectorAll("img")[i].classList.add("store_pic_transition");
+                            pic.querySelectorAll("img")[i].classList.add("store_pic_left");
+                        } else if (pic.querySelectorAll("img")[i].classList.contains("store_pic_right")) {
+                            pic.querySelectorAll("img")[i].classList.remove("store_pic_right");
+                            pic.querySelectorAll("img")[i].classList.add("store_pic_transition");
+                            pic.querySelectorAll("img")[i].classList.add("store_pic_mid");
+                        }
+                    }
+
+                })
+                pic.querySelectorAll("div")[1].addEventListener("click", function () {
+                    for (let i = 0; i < 3; i++) {
+                        if (pic.querySelectorAll("img")[i].classList.contains("store_pic_transition")) {
+                            pic.querySelectorAll("img")[i].classList.remove("store_pic_transition");
+                        }
+                        if (pic.querySelectorAll("img")[i].classList.contains("store_pic_left")) {
+                            pic.querySelectorAll("img")[i].classList.remove("store_pic_left");
+                            pic.querySelectorAll("img")[i].classList.add("store_pic_transition");
+                            pic.querySelectorAll("img")[i].classList.add("store_pic_mid");
+                        } else if (pic.querySelectorAll("img")[i].classList.contains("store_pic_mid")) {
+                            pic.querySelectorAll("img")[i].classList.remove("store_pic_mid");
+                            pic.querySelectorAll("img")[i].classList.add("store_pic_transition");
+                            pic.querySelectorAll("img")[i].classList.add("store_pic_right");
+                        } else if (pic.querySelectorAll("img")[i].classList.contains("store_pic_right")) {
+                            pic.querySelectorAll("img")[i].classList.remove("store_pic_right");
+                            pic.querySelectorAll("img")[i].classList.add("store_pic_left");
+                        }
+                    }
+                })
+
+            } else {
+                pic.querySelector("img").src = value[5];
+            }
+
+            map.style.position = "absolute";
+            map.style.height = "55%";
+            map.style.width = "98%";
+            map.style.top = "44%";
+            map.style.left = "1%";
+            if (value[10] == "") {
+                map.innerHTML = '<img src="https://placehold.co/240x135?text=Error+404" alt="">';
+                map.querySelector("img").style.height = "100%";
+                map.querySelector("img").style.width = "100%";
+            } else {
+                map.innerHTML = value[10];
+                map.querySelector("iframe").height = "100%";
+                map.querySelector("iframe").width = "100%";
+            }
+        }
+
+        function set_confirm(type, text_title, text_content) {
+            if (type == 0) {
+                wnd_confirm.querySelector(".btn_cancel").style.display = "block";
+                wnd_confirm.querySelector(".btn_confirm").style.display = "block";
+                wnd_confirm.querySelector(".btn_cancel").style.left = "15%";
+                wnd_confirm.querySelector(".btn_confirm").style.left = "55%";
+
+            } else if (type == 1) {
+                wnd_confirm.querySelector(".btn_cancel").style.display = "none";
+                wnd_confirm.querySelector(".btn_confirm").style.display = "block";
+                wnd_confirm.querySelector(".btn_confirm").style.left = "35%";
+            } else {
+                wnd_confirm.querySelector(".btn_cancel").style.display = "none";
+                wnd_confirm.querySelector(".btn_confirm").style.display = "none";
+            }
+            wnd_confirm.querySelector(".area_title").innerHTML = text_title;
+            wnd_confirm.querySelector(".text_content").innerHTML = text_content;
+            wnd_confirm.querySelector(".text_content").style.fontSize = "24px";
+            wnd_confirm.querySelector(".text_content").style.position = "relative";
+            wnd_confirm.querySelector(".text_content").style.top = "15%";
+        }
+
+        function confirm_event() {
+            switch (confirm_type) {
+                case "delete":
+                    console.log("test");
+                    console.log(delete_data);
+                    area_list.removeChild(delete_data);
+                    console.log(get_store(delete_data, 1));
+                    data_arr_result.splice(get_store(delete_data, 1), 1);
+                    if (data_arr_result.length == 0) {
+                        toggle_delete.classList.remove("list_delete");
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        function toggle_menu_display() {
+            console.log(toggle_list);
+            if (toggle_list.querySelector("input").checked) {
+                area_list.style.display = "block";
+                trun_table.style.display = "none";
+            } else if (toggle_roulette.querySelector("input").checked) {
+                area_list.style.display = "none";
+                trun_table.style.display = "block";
+            } else if (toggle_contact.querySelector("input").checked) {
+                area_list.style.display = "none";
+                trun_table.style.display = "none";
             }
         }
 
@@ -1181,7 +1434,6 @@
 
         function initail_wnd_store_add() {
             wnd_store_add.querySelector("label").classList.remove("input_necessary");
-            wnd_store_add.querySelector(".text_hint").style.color = "#FF000000";
             for (let i = 0; i < wnd_store_add.querySelectorAll("input").length; i++) {
                 wnd_store_add.querySelectorAll("input")[i].value = "";
             }
@@ -1220,6 +1472,8 @@
         btn_back.style.display = 'none';
         trun_table.style.display = 'none';
         wnd_store_add.style.display = "none";
+        wnd_store_info.style.display = "none";
+        area_list.style.display = 'none';
 
         //測試
         // _wheel(10);
