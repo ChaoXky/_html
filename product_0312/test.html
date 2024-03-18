@@ -22,11 +22,13 @@
             margin: 0;
             font-family: "Zen Kurenaido", sans-serif;
             background-color: #fff;
+            background-image: url('./bg.jpg');
         }
 
         #trunTable {
             position: relative;
             text-align: center;
+            padding: 30px 0;
         }
 
         #trunButton {
@@ -36,19 +38,20 @@
             transform: translate(-50%, -50%);
             padding: 10px;
             border-radius: 50%;
-            background-color: #fff;
-            box-shadow: 0 1px 5px rgba(0, 0, 0, .5);
+            background-color: #FF8C00E0;
+            /* box-shadow: 0 1px 5px rgba(0, 0, 0, .5); */
             color: black;
             cursor: pointer;
-            height: 50px;
-            width: 50px;
+            height: 200px;
+            width: 200px;
         }
 
         .animated {
             animation-name: roulette;
-            animation-duration: 2s;
+            animation-duration: 3s;
             /* animation-iteration-count: infinite; */
-            animation-timing-function: ease-out;
+            /* animation-timing-function: ease-out; */
+            animation-timing-function: cubic-bezier(0, 0.9, 0.58, 1);
         }
 
         @keyframes roulette {
@@ -167,6 +170,7 @@
             width: 80%;
             height: 80%;
             max-height: 500px;
+            max-width: 800px;
             /* background-color: white; */
             border-radius: 10px;
             top: 50%;
@@ -483,7 +487,8 @@
         }
 
         header {
-            background-color: #fff;
+            /* background-color: #fff; */
+            background-image: url(./bg.jpg);
             height: 60px;
             border-bottom: 1px solid black;
             position: sticky;
@@ -492,8 +497,11 @@
         }
 
         footer {
+            background-image: url(./bg.jpg);
             background-color: #fff;
             height: 60px;
+            border-top: 1px solid black;
+
         }
 
         footer div p {
@@ -535,7 +543,7 @@
 
         .area_menu .toggle .icon_bg {
             position: relative;
-            background-color: #FF8C00;
+            background-color: #FF8C00B0;
             height: 80px;
             top: -45px;
             z-index: -1;
@@ -581,7 +589,7 @@
         }
 
         #area_list td {
-            background-color: #808080;
+            background-color: #808080b0;
             width: 25vw;
             /* height: 50px; */
             text-align: center;
@@ -591,7 +599,7 @@
 
         #area_list tr:hover td,
         #area_list tr:nth-of-type(even):hover td {
-            background-color: #007FFF;
+            background-color: #007FFFb0;
             color: #fff;
         }
 
@@ -600,12 +608,12 @@
             z-index: 1;
         }
 
-        #area_list tr:last-of-type {
+        /* #area_list tr:last-of-type {
             border-bottom: 2px solid #FF0000;
-        }
+        } */
 
         #area_list tr:nth-of-type(even) td {
-            background-color: #fff;
+            background-color: #ffffffb0;
             color: #000;
         }
 
@@ -677,7 +685,7 @@
     <div class="container" id="trunTable">
         <canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d300;">
             Your browser does not support the HTML canvas tag.</canvas>
-        <button id="trunButton">test</button>
+        <button id="trunButton">START</button>
     </div>
 
     <div id="btn_back"></div>
@@ -709,7 +717,7 @@
 
     <!-- 店家資訊 -->
     <div id="wnd_store_info">
-        <div class="bg_store_info" onclick="fade_out(wnd_store_info)"></div>
+        <div class="bg_store_info" onclick="fade_out(wnd_store_info); stopInterval()"></div>
         <div id="area_store_info" class="area_info">
             <div class="area_title">店家資訊</div>
             <h3>店家名稱</h3>
@@ -726,6 +734,7 @@
         </div>
     </div>
 
+    <!-- 篩選 -->
     <label class="icon_filter">
         <input type="checkbox">
         <i class="fa-solid fa-gear"></i>
@@ -777,9 +786,9 @@
                 <i class="fa-solid fa-trash">移除店家</i>
             </label>
         </div>
-
-
     </div>
+
+    <!-- 店家清單 -->
     <table id="area_list" class="container"></table>
     <footer>
         <div class="container">
@@ -788,6 +797,7 @@
     </footer>
     <!-- JS -->
     <script>
+        
         //變數宣告
         //介面相關變數
         var btn = document.getElementById("trunButton");
@@ -797,6 +807,7 @@
         var toggle_list = document.querySelector(".btn_list");
         var toggle_roulette = document.querySelector(".btn_roulette");
         var toggle_contact = document.querySelector(".btn_contact");
+        var icon_filter = document.querySelector(".icon_filter");
         // var _login = document.getElementById("_login");
         // var _input = document.getElementById("_input");
 
@@ -812,6 +823,7 @@
         var data_arr_result = [];
         var confirm_type;
         var delete_data;
+        var intervalId;
 
         //輪盤相關變數
         var _keyframes = document.styleSheets[2].cssRules[5];
@@ -823,60 +835,61 @@
 
         //繪製輪盤
         function _wheel(num) {
+            var radius = window.innerWidth*0.4/2;
+            trun_table.querySelector("canvas").width=radius*2;
+            trun_table.querySelector("canvas").height=radius*2;
+
+            _wheel_num = num;
             var deg = 1 / num * 360;
             var angle = deg * (Math.PI / 180);
             var lastangle = 0;
             for (var i = 0; i < num; i++) {
-                console.log(num);
                 // 保存当前状态
                 ctx.save();
                 // 开始一条新路径
                 ctx.beginPath();
                 // 位移到圆心，下面需要围绕圆心旋转
-                ctx.translate(250, 250);
+                ctx.translate(radius, radius);
                 // 从(0, 0)坐标开始定义一条新的子路径
                 ctx.moveTo(0, 0);
                 // 旋转弧度,需将角度转换为弧度,使用 degrees * Math.PI/180 公式进行计算。
                 ctx.rotate(lastangle);
                 lastangle += angle;
                 // 绘制圆弧
-                ctx.arc(0, 0, 250, 0, angle, false);
-                if (i % 5 == 0) {
-                    ctx.fillStyle = '#1BE7FF';
-                } else if (i % 5 == 1) {
-                    ctx.fillStyle = '#6EEB83';
-                }
-                else if (i % 5 == 2) {
-                    ctx.fillStyle = '#E4FF1A';
-                }
-                else if (i % 5 == 3) {
-                    ctx.fillStyle = '#FFB800';
-                }
-                else {
-                    ctx.fillStyle = '#FF5714';
+                ctx.arc(0, 0, radius, 0, angle, false);
+                if (i % 2 == 0) {
+                    ctx.fillStyle = '#0051BA';
+                } else {
+                    ctx.fillStyle = '#FFFFFF';
                 }
 
                 // 填充扇形
                 ctx.fill();
                 // 绘制边框
-                ctx.lineWidth = 0.5;
-                ctx.strokeStyle = '#b0e0e6';
+                ctx.lineWidth = 1;
+                ctx.strokeStyle = '#808080';
                 ctx.stroke();
 
                 // 文字
                 ctx.rotate(angle / 2);
-                ctx.fillStyle = '#000000';
+                if (i % 2 == 0) {
+                    ctx.fillStyle = '#FFFFFF';
+                } else {
+                    ctx.fillStyle = '#000000';
+                }
+                
                 // if (i % 5 == 0 || i%5 == 3) {
                 // } else{
                 //     ctx.fillStyle = '#fff';
                 // }
                 ctx.font = "18px sans-serif";
                 ctx.textBaseline = 'middle';
-                ctx.fillText(i, 250 / 2.25, 0);
+                ctx.fillText(data_arr_result[i][1], radius / 2.25, 0);
 
                 // 恢复前一个状态
                 ctx.restore();
             }
+            
         }
 
         //點擊按鈕增加class & 亂數
@@ -900,15 +913,27 @@
         c.addEventListener('animationend', function () {
             var _reward_deg = _temp_0per % 360;
             // var _reward_deg = 360 / _wheel_num;
-            console.log("reward = " + (_wheel_num - 1 - Math.floor(_reward_deg / (360 / _wheel_num))));
-            console.log('end' + _reward_deg);
+            // console.log("reward = " + (_wheel_num - 1 - Math.floor(_reward_deg / (360 / _wheel_num))));
+            // console.log('end' + _reward_deg);
+            // console.log(data_arr_result[(_wheel_num - 1 - Math.floor(_reward_deg / (360 / _wheel_num)))][1]);
             this.classList.remove("animated");
             this.style.transform = "rotate(" + _temp_0per + "deg)";
             _wheel_is_start = false;
 
             //顯示獎勵視窗
-            fade_in();
+            wheel_result(data_arr_result[(_wheel_num - 1 - Math.floor(_reward_deg / (360 / _wheel_num)))][1]);
+
         })
+
+        async function wheel_result(result) {
+            await delay(300);
+            fade_in(wnd_confirm);
+            set_confirm(0, "今天吃甚麼", "就決定吃" + result + "吧");
+        }
+        //延遲顯示轉盤結果
+        function delay(time) {
+            return new Promise(resolve => setTimeout(resolve, time));
+        }
 
         //input事件繪製輪盤
         // _input.addEventListener('change', function () {
@@ -1110,20 +1135,8 @@
                 });
                 area_list.appendChild(trobj);
             }
-            // console.log(area_list);
-
-            // for (let i = 0; i < data_arr.length; i++) {
-            //     if (data_arr[i][3] == this.value) {
-            //         temp_arr.push(data_arr[i])
-            //     }
-            // }
-
-            // for (let i = 0; i < data_arr.length - 1; i++) {
-            //     if (data_arr[i][3].includes(this.value)) {
-            //         temp_arr.push(data_arr[i]);
-            //     }
-            // }
-            // console.table(data_arr_result);
+            //資料倒入轉盤
+            _wheel(data_arr_result.length);
         }
 
         function sortTable(n) {
@@ -1302,6 +1315,7 @@
                 pic.querySelectorAll("div")[0].classList = "store_pic_btn_left";
                 pic.querySelectorAll("div")[1].classList = "store_pic_btn_right";
                 pic.querySelectorAll("div")[0].addEventListener("click", function () {
+                    clearInterval(intervalId);
                     for (let i = 0; i < 3; i++) {
                         if (pic.querySelectorAll("img")[i].classList.contains("store_pic_transition")) {
                             pic.querySelectorAll("img")[i].classList.remove("store_pic_transition");
@@ -1319,9 +1333,10 @@
                             pic.querySelectorAll("img")[i].classList.add("store_pic_mid");
                         }
                     }
-
+                    intervalId = setInterval(triggerFunction, 1000);
                 })
                 pic.querySelectorAll("div")[1].addEventListener("click", function () {
+                    clearInterval(intervalId);
                     for (let i = 0; i < 3; i++) {
                         if (pic.querySelectorAll("img")[i].classList.contains("store_pic_transition")) {
                             pic.querySelectorAll("img")[i].classList.remove("store_pic_transition");
@@ -1339,8 +1354,9 @@
                             pic.querySelectorAll("img")[i].classList.add("store_pic_left");
                         }
                     }
+                    intervalId = setInterval(triggerFunction, 1000);
                 })
-
+                intervalId = setInterval(triggerFunction, 1000);
             } else {
                 pic.querySelector("img").src = value[5];
             }
@@ -1386,8 +1402,8 @@
         function confirm_event() {
             switch (confirm_type) {
                 case "delete":
-                    console.log("test");
-                    console.log(delete_data);
+                    // console.log("test");
+                    // console.log(delete_data);
                     area_list.removeChild(delete_data);
                     console.log(get_store(delete_data, 1));
                     data_arr_result.splice(get_store(delete_data, 1), 1);
@@ -1402,16 +1418,50 @@
         }
 
         function toggle_menu_display() {
-            console.log(toggle_list);
+            icon_filter.querySelector("input").checked = false;
             if (toggle_list.querySelector("input").checked) {
                 area_list.style.display = "block";
+                icon_filter.style.display = "block";
                 trun_table.style.display = "none";
             } else if (toggle_roulette.querySelector("input").checked) {
                 area_list.style.display = "none";
+                icon_filter.querySelector("input").checked = false;
+                icon_filter.style.display = "none";
                 trun_table.style.display = "block";
             } else if (toggle_contact.querySelector("input").checked) {
                 area_list.style.display = "none";
+                icon_filter.style.display = "none";
                 trun_table.style.display = "none";
+            }
+        }
+
+        //週期觸發幻燈片
+        function startInterval() {
+            intervalId = setInterval(triggerFunction, 1000); // 每隔 1000 毫秒（1 秒）触发一次 triggerFunction()
+        }
+
+        function stopInterval() {
+            clearInterval(intervalId); // 停止触发函数
+        }
+
+        function triggerFunction() {
+            var pic = wnd_store_info.querySelector(".store_pic");
+            for (let i = 0; i < 3; i++) {
+                if (pic.querySelectorAll("img")[i].classList.contains("store_pic_transition")) {
+                    pic.querySelectorAll("img")[i].classList.remove("store_pic_transition");
+                }
+                if (pic.querySelectorAll("img")[i].classList.contains("store_pic_left")) {
+                    pic.querySelectorAll("img")[i].classList.remove("store_pic_left");
+                    pic.querySelectorAll("img")[i].classList.add("store_pic_right");
+                } else if (pic.querySelectorAll("img")[i].classList.contains("store_pic_mid")) {
+                    pic.querySelectorAll("img")[i].classList.remove("store_pic_mid");
+                    pic.querySelectorAll("img")[i].classList.add("store_pic_transition");
+                    pic.querySelectorAll("img")[i].classList.add("store_pic_left");
+                } else if (pic.querySelectorAll("img")[i].classList.contains("store_pic_right")) {
+                    pic.querySelectorAll("img")[i].classList.remove("store_pic_right");
+                    pic.querySelectorAll("img")[i].classList.add("store_pic_transition");
+                    pic.querySelectorAll("img")[i].classList.add("store_pic_mid");
+                }
             }
         }
 
@@ -1474,6 +1524,8 @@
         wnd_store_add.style.display = "none";
         wnd_store_info.style.display = "none";
         area_list.style.display = 'none';
+
+
 
         //測試
         // _wheel(10);
