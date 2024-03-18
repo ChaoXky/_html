@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Chokokutai&family=Dela+Gothic+One&family=DotGothic16&family=Noto+Sans+TC:wght@100..900&family=Noto+Serif+TC&family=Rampart+One&family=RocknRoll+One&family=Yuji+Boku&family=Yusei+Magic&family=Zen+Kurenaido&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Zen Kurenaido", sans-serif;
+            background-color: #fff;
+        }
+
+        #trunTable {
+            position: relative;
+            text-align: center;
+        }
+
+        #trunButton {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px;
+            border-radius: 50%;
+            background-color: #fff;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, .5);
+            color: black;
+            cursor: pointer;
+            height: 50px;
+            width: 50px;
+        }
+
+        .animated {
+            animation-name: roulette;
+            animation-duration: 2s;
+            /* animation-iteration-count: infinite; */
+            animation-timing-function: ease-out;
+        }
+
+        @keyframes roulette {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(1800deg);
+            }
+        }
+
+        @keyframes ani_fade {
+            from {
+                transform: scale(0.001);
+            }
+
+            to {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes progressMove {
+            0% {
+                background:
+                    linear-gradient(135deg, orange 20%, rgba(255, 255, 255, 0) 20%) 0% 0px / 55px 100px,
+                    linear-gradient(315deg, orange 20%, rgba(255, 255, 255) 20%) 0% 30px / 55px 100px;
+            }
+
+            100% {
+                background:
+                    linear-gradient(135deg, orange 20%, rgba(255, 255, 255, 0) 20%) 300% 0px / 55px 100px,
+                    linear-gradient(315deg, orange 20%, rgba(255, 255, 255) 20%) 300% 30px / 55px 100px;
+            }
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translateX(-5px);
+            }
+
+            25% {
+                transform: translateX(0px);
+            }
+
+            50% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(0px);
+            }
+
+            100% {
+                transform: translateX(-5px);
+            }
+        }
+
+        #btn_back {
+            width: 100%;
+            height: 100%;
+            background-color: hsla(0, 0%, 0%, 0.8);
+            top: 0px;
+            position: fixed;
+            z-index: 40;
+        }
+
+        #wnd_confirm {
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            pointer-events: none;
+            position: fixed;
+            z-index: 50;
+        }
+
+        #area_confirm {
+            width: 480px;
+            height: 300px;
+            /* background-color: white; */
+            border-radius: 10px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            position: fixed;
+            z-index: 50;
+        }
+
+        #wnd_store_add {
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            /* pointer-events: none; */
+            position: fixed;
+            z-index: 50;
+        }
+
+        #area_store_add {
+            width: 480px;
+            height: 300px;
+            /* background-color: white; */
+            border-radius: 10px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #wnd_store_info {
+            width: 100%;
+            height: 100%;
+            top: 0px;
+            /* pointer-events: none; */
+            position: fixed;
+            z-index: 50;
+        }
+
+        #area_store_info {
+            width: 80%;
+            height: 80%;
+            /* background-color: white; */
+            border-radius: 10px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        #wnd_store_info .area_title {
+            height: 30px;
+        }
+
+        .area_info {
+            width: 100%;
+            height: 90%;
+            border: 0;
+            border-radius: 0px 0px 10px 10px;
+            background-color: #fff;
+            text-align: center;
+            position: relative;
+        }
+
+        .area_title {
+            background-color: #0051BA;
+            width: 100%;
+            height: 10%;
+            top: 0;
+            position: relative;
+            border-radius: 10px 10px 0px 0px;
+            margin-bottom: 10px;
+            color: #fff;
+            cursor: default;
+        }
+
+        .area_info label {
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .area_info h3, p {
+            width: max-content;
+            padding: 0 0 5px 5% ;
+            margin: 0px;
+        }
+
+        .btn_cancel {
+            position: relative;
+            height: 50px;
+            width: 30%;
+            bottom: -30px;
+            left: 15%;
+            background-color: #FF2400;
+            padding: 10px 0 0 0;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .btn_confirm {
+            position: relative;
+            height: 50px;
+            width: 30%;
+            bottom: 20px;
+            left: 55%;
+            background-color: #007FFF;
+            padding: 10px 0 0 0;
+            border-radius: 10px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .input_necessary::before {
+            content: "*";
+            color: #FF0000;
+            font-weight: bold;
+        }
+
+        .text_hint {
+            position: relative;
+            top: 25px;
+            color: #FF000000;
+            height: 34.78px;
+        }
+
+        .ani_fade_in {
+            animation-name: ani_fade;
+            animation-duration: 0.25s;
+            /* animation-iteration-count: infinite; */
+            animation-timing-function: linear;
+            animation-direction: normal;
+        }
+
+        .ani_fade_out {
+            animation-name: ani_fade;
+            animation-duration: 0.25s;
+            /* animation-iteration-count: infinite; */
+            animation-timing-function: linear;
+            animation-direction: reverse;
+        }
+
+        .area_data_filter {
+            padding: 0 10% 0 10%;
+            display: none;
+            border-bottom: 1px solid #dddddd;
+            z-index: 2;
+        }
+
+        .area_data_filter div {
+            color: #fff;
+            width: 50%;
+            text-align: center;
+            float: left;
+        }
+
+        #label_star,
+        #label_price {
+            position: fixed;
+        }
+
+        .area_data_filter input[type=checkbox] {
+            display: none;
+        }
+
+        .area_data_filter .checkmark {
+            display: inline-block;
+            margin-right: 5px;
+            margin-left: 5px;
+            height: 20px;
+            width: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .area_data_filter label:hover .checkmark {
+            background-color: #FFD700;
+        }
+
+        .area_data_filter input:checked+.checkmark {
+            background-color: #FF8C00;
+        }
+
+        .area_data_filter .area_edit {
+            width: 100%;
+            margin: 0 0 5px 0;
+        }
+
+        .area_data_filter .area_edit label {
+            margin: 0 2%;
+            padding: 0 8%;
+            background-color: #007FFF;
+            border-radius: 10px;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .area_data_filter .area_edit label:hover {
+            background-color: #0088FF;
+        }
+
+        .area_data_filter .area_edit label:active {
+            background-color: #0066CC;
+        }
+
+        .list_delete {
+            animation: progressMove 2s linear infinite;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        /*  */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 12px;
+            width: 150px;
+            cursor: pointer;
+            outline: none;
+            overflow: hidden;
+            border-radius: 16px;
+        }
+
+        /* 滑動軌道 樣式 */
+        input[type="range"]::-webkit-slider-runnable-track {
+            height: 6px;
+            width: 180px;
+            border-radius: 16px;
+            background: #fff;
+        }
+
+        /* 滑動鈕 樣式 */
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            height: 13px;
+            width: 13px;
+            margin-top: -4px;
+            background-color: #fff;
+            border-radius: 50%;
+            border: 2px solid #FF8C00;
+            box-shadow: -407px 0 0 400px #FF8C00;
+        }
+
+        /*  */
+
+        .icon_filter {
+            position: fixed;
+            top: 60px;
+            z-index: 3;
+            padding-left: 35px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 28px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            left: 12%;
+        }
+
+        .icon_filter input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+
+        .icon_filter i {
+            position: absolute;
+            top: 2px;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            color: #fff;
+        }
+
+        .icon_filter:hover i {
+            color: #FFD700;
+        }
+
+        .icon_filter input:checked~i {
+            color: #FF8C00;
+        }
+
+        .icon_filter:has(input:checked)+.area_data_filter {
+            background-color: #0051BA;
+            display: block;
+            position: sticky;
+            top: 60px;
+        }
+
+        .icon_filter:has(input:checked)~#area_list th {
+            top: 181.5px;
+        }
+
+        .container {
+            /* background-color: lightgreen; */
+            width: 80%;
+            /* max-width: 1280px; */
+            margin: auto;
+        }
+
+        .container::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        header {
+            background-color: #fff;
+            height: 60px;
+            border-bottom: 1px solid black;
+            position: sticky;
+            top: 0px;
+            z-index: 4;
+        }
+
+        footer {
+            background-color: #fff;
+            height: 60px;
+        }
+
+        footer div p {
+            text-align: right;
+            margin: 0px;
+        }
+
+        .golden {
+            color: #FFD700;
+            /* text-shadow: 1px 1px 2px #888888; */
+            text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+        }
+
+        td {
+            /* background-color: #4cbdc1; */
+            width: 25vw;
+            height: 30px;
+            text-align: center;
+        }
+
+        .area_menu {
+            display: flex;
+            height: 100%;
+        }
+
+        .area_menu .toggle {
+            width: 33.3333%;
+            height: 100%;
+            text-align: center;
+            /* margin-top: 15px; */
+            padding: 15px;
+            cursor: pointer;
+
+        }
+
+        .area_menu .toggle:hover {
+            z-index: 5;
+        }
+
+        .area_menu .toggle .icon_bg {
+            position: relative;
+            background-color: #FF8C00;
+            height: 80px;
+            top: -45px;
+            z-index: -1;
+            clip-path: inset(60px 5px 20px 5px round 20px 20px 0 0);
+            transition: 0.2s;
+        }
+
+        .area_menu .toggle:hover .icon_bg {
+            clip-path: inset(5px 5px 19px 5px round 20px 20px 0 0);
+        }
+
+        .btn_about {
+            position: relative;
+            width: 30px;
+            height: 30px;
+            left: 93%;
+            top: -45px;
+            cursor: help;
+        }
+
+        .btn_about:hover {
+            color: #FF8C00;
+        }
+
+        #area_list {
+            border-collapse: collapse;
+        }
+
+        #area_list th {
+            background-color: #0051BA;
+            color: #ffffff;
+            width: 25vw;
+            /* height: 75px; */
+            position: sticky;
+            top: 60px;
+            z-index: 2;
+        }
+
+        #area_list td {
+            background-color: #808080;
+            width: 25vw;
+            /* height: 50px; */
+            text-align: center;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #area_list tr:hover td,
+        #area_list tr:nth-of-type(even):hover td {
+            background-color: #007FFF;
+            color: #fff;
+        }
+
+        #area_list tr {
+            border-bottom: 1px solid #dddddd;
+            z-index: 1;
+        }
+
+        #area_list tr:last-of-type {
+            border-bottom: 2px solid #FF0000;
+        }
+
+        #area_list tr:nth-of-type(even) td {
+            background-color: #fff;
+            color: #000;
+        }
+
+        #area_list label,
+        label>div {
+            display: block;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        #area_list label>div {
+            transition: 0.5s;
+            position: absolute;
+            height: 5px;
+            top: 27px;
+            background-color: #FF8C00;
+            clip-path: inset(5px 0 0 0 round 5px 5px 0 0);
+        }
+
+        #area_list [type='radio'] {
+            display: none;
+        }
+
+        #area_list label:has(input:checked) {
+            color: #FF8C00;
+        }
+
+        #area_list input:checked+div {
+            clip-path: inset(0 15% 0 15% round 5px 5px 0 0);
+        }
+
+        .btn_delete_on {
+            position: absolute;
+            cursor: pointer;
+            z-index: 0;
+        }
+
+        .btn_delete i {
+            color: red;
+            animation: shake 0.5s linear infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container area_menu">
+            <!-- <p>Copyright &copy;</p> -->
+            <div class="btn_list toggle">店家列表<div class="icon_bg"></div>
+            </div>
+            <div class="btn_roulette toggle">START<div class="icon_bg"></div>
+            </div>
+            <div class="btn_contact toggle">聯絡我們<div class="icon_bg"></div>
+            </div>
+        </div>
+        <div class="btn_about "><i class="fa-regular fa-circle-question"></i></div>
+    </header>
+    <!-- <p id="_login"></p> -->
+    <!-- <input type="text" id="_input" autocomplete="off">輸入 -->
+    <div class="container" id="trunTable">
+        <canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d300;">
+            Your browser does not support the HTML canvas tag.</canvas>
+        <button id="trunButton">test</button>
+    </div>
+
+    <div id="btn_back"></div>
+    <!-- 確認視窗 -->
+    <div id="wnd_confirm">
+        <div id="area_confirm">
+            <div class="area_title"></div>
+            <div class="area_info">
+                恭喜獲得
+            </div>
+        </div>
+    </div>
+
+    <!-- 新增店家資料 -->
+    <div id="wnd_store_add">
+        <div id="area_store_add" class="area_info">
+            <div class="area_title">新增資料</div>
+            <label>店家：<input type="text"></label>
+            <br>
+            <label>地址：<input type="text"></label>
+            <br>
+            <label>電話：<input type="text"></label>
+            <br>
+            <label class="text_hint">empty</label>
+            <div class="btn_cancel" onclick="fade_out(wnd_store_add)">取消</div>
+            <div class="btn_confirm" onclick="add_new_data(wnd_store_add)">新增</div>
+        </div>
+    </div>
+
+    <!-- 店家資訊 -->
+    <div id="wnd_store_info">
+        <div id="area_store_info" class="area_info">
+            <div class="area_title">店家資訊</div>
+            <h3>店家名稱</h3>
+            <p>電話：<spwn>123</spwn>
+            </p>
+            <p>評價：<spwn>123</spwn>
+            </p>
+            <p>地址：<spwn>123</spwn>
+            </p>
+            <p>價位：<spwn>123</spwn>
+            </p>
+            <div></div>
+        </div>
+    </div>
+
+    <label class="icon_filter">
+        <input type="checkbox">
+        <i class="fa-solid fa-gear"></i>
+    </label>
+    <div class="area_data_filter container">
+        <div>
+            類型：
+            <label><input type="checkbox" id="check_type1" onchange="get_data()"><span
+                    class="checkmark"></span>中式</label>
+            <label><input type="checkbox" id="check_type2" onchange="get_data()"><span
+                    class="checkmark"></span>西式</label>
+        </div>
+        <div>
+            評價：
+            <input type="range" min="1" max="5" value="5" id="check_star" onchange="set_label_star(value); get_data()">
+            <label id="label_star"></label>
+        </div>
+        <div>
+            時段：
+            <label><input type="checkbox" id="check_time1" onchange="get_data()"><span
+                    class="checkmark"></span>早上</label>
+            <label><input type="checkbox" id="check_time2" onchange="get_data()"><span
+                    class="checkmark"></span>中午</label>
+        </div>
+        <div>
+            價位：
+            <input type="range" min="1" max="5" value="5" id="check_price"
+                onchange="set_label_price(value); get_data()">
+            <label id="label_price"></label>
+        </div>
+        <div>
+            葷素：
+            <label><input type="checkbox" id="check_mv1" onchange="get_data()"><span class="checkmark"></span>葷食</label>
+            <label><input type="checkbox" id="check_mv2" onchange="get_data()"><span class="checkmark"></span>素食</label>
+        </div>
+        <div class="area_edit">
+            <label onclick="fade_in(wnd_store_add); initail_wnd_store_add();"><i
+                    class="fa-solid fa-plus">新增店家</i></label>
+            <label onclick="set_list_delete_toggle(this);">
+                <i class="fa-solid fa-trash">移除店家</i></label>
+        </div>
+
+
+    </div>
+    <table id="area_list" class="container"></table>
+    <footer>
+        <div class="container">
+            <p>Copyright &copy;</p>
+        </div>
+    </footer>
+    <!-- JS -->
+    <script>
+
+
+        //變數宣告
+        //介面相關變數
+        var btn = document.getElementById("trunButton");
+        var trun_table = document.getElementById("trunTable");
+        var area_list = document.getElementById("area_list");
+        // var _login = document.getElementById("_login");
+        // var _input = document.getElementById("_input");
+
+        //確認視窗相關變數
+        var btn_back = document.getElementById("btn_back");
+        var wnd_confirm = document.getElementById("wnd_confirm");
+        var area_confirm = document.getElementById("area_confirm");
+        var wnd_store_add = document.getElementById("wnd_store_add");
+
+        //資料相關變數
+        var data_arr;
+        var data_arr_result = [];
+
+        //輪盤相關變數
+        var _keyframes = document.styleSheets[2].cssRules[5];
+        var _wheel_num = 0;
+        var _temp_0per = 0;
+        var _wheel_is_start = false;
+        var c = document.getElementById("myCanvas");
+        var ctx = c.getContext('2d');
+
+        //繪製輪盤
+        function _wheel(num) {
+            var deg = 1 / num * 360;
+            var angle = deg * (Math.PI / 180);
+            var lastangle = 0;
+            for (var i = 0; i < num; i++) {
+                console.log(num);
+                // 保存当前状态
+                ctx.save();
+                // 开始一条新路径
+                ctx.beginPath();
+                // 位移到圆心，下面需要围绕圆心旋转
+                ctx.translate(250, 250);
+                // 从(0, 0)坐标开始定义一条新的子路径
+                ctx.moveTo(0, 0);
+                // 旋转弧度,需将角度转换为弧度,使用 degrees * Math.PI/180 公式进行计算。
+                ctx.rotate(lastangle);
+                lastangle += angle;
+                // 绘制圆弧
+                ctx.arc(0, 0, 250, 0, angle, false);
+                if (i % 5 == 0) {
+                    ctx.fillStyle = '#1BE7FF';
+                } else if (i % 5 == 1) {
+                    ctx.fillStyle = '#6EEB83';
+                }
+                else if (i % 5 == 2) {
+                    ctx.fillStyle = '#E4FF1A';
+                }
+                else if (i % 5 == 3) {
+                    ctx.fillStyle = '#FFB800';
+                }
+                else {
+                    ctx.fillStyle = '#FF5714';
+                }
+
+                // 填充扇形
+                ctx.fill();
+                // 绘制边框
+                ctx.lineWidth = 0.5;
+                ctx.strokeStyle = '#b0e0e6';
+                ctx.stroke();
+
+                // 文字
+                ctx.rotate(angle / 2);
+                ctx.fillStyle = '#000000';
+                // if (i % 5 == 0 || i%5 == 3) {
+                // } else{
+                //     ctx.fillStyle = '#fff';
+                // }
+                ctx.font = "18px sans-serif";
+                ctx.textBaseline = 'middle';
+                ctx.fillText(i, 250 / 2.25, 0);
+
+                // 恢复前一个状态
+                ctx.restore();
+            }
+        }
+
+        //點擊按鈕增加class & 亂數
+        btn.addEventListener("click", function () {
+            if (!_wheel_is_start) {
+                _wheel_is_start = true;
+                _keyframes.deleteRule("0%");
+                _keyframes.appendRule("0% {transform: rotate(" + _temp_0per % 360 + "deg);}");
+
+                var _ran = Math.floor(Math.random() * 360) + 3600 + (_temp_0per % 360);
+                _temp_0per = _ran;
+                console.log('Random = ' + _ran);
+
+                _keyframes.deleteRule("100%");
+                _keyframes.appendRule("100% {transform: rotate(" + _ran + "deg);}");
+                c.classList.add("animated");
+            }
+        })
+
+        //動畫播完移除calss
+        c.addEventListener('animationend', function () {
+            var _reward_deg = _temp_0per % 360;
+            // var _reward_deg = 360 / _wheel_num;
+            console.log("reward = " + (_wheel_num - 1 - Math.floor(_reward_deg / (360 / _wheel_num))));
+            console.log('end' + _reward_deg);
+            this.classList.remove("animated");
+            this.style.transform = "rotate(" + _temp_0per + "deg)";
+            _wheel_is_start = false;
+
+            //顯示獎勵視窗
+            fade_in();
+        })
+
+        //input事件繪製輪盤
+        // _input.addEventListener('change', function () {
+        //     console.log(this.value);
+        //     _wheel(this.value);
+        //     _wheel_num = this.value;
+        //     _temp_0per = 0;
+        //     c.style.transform = "rotate(" + _temp_0per + "deg)";
+        // })
+
+
+
+        //讀取TXT 資料陣列生成
+        function ReadFile(data) {
+            // console.table(data);
+            //_login.innerHTML = data;
+            data_arr = data.split('\n');
+            // console.table(data_arr);
+            for (let i = 0; i < data_arr.length; i++) {
+                data_arr[i] = data_arr[i].split(',');
+                // console.table(data_arr[i]);
+                get_data();
+            }
+        }
+        var xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+            ReadFile(xhr.responseText);
+        }
+        xhr.open("get", "店家表.txt", true);
+        xhr.send();
+
+        function get_data() {
+            var type = -1, time = -1, mv = 0, star = 5, price = 5;
+            //判斷類型
+            if (document.getElementById("check_type1").checked == document.getElementById("check_type2").checked) {
+                type = -1;
+            } else if (document.getElementById("check_type1").checked) {
+                type = "中式";
+            } else {
+                type = "西式";
+            }
+            //判斷時段
+            if (document.getElementById("check_time1").checked == document.getElementById("check_time2").checked) {
+                time = -1;
+            } else if (document.getElementById("check_time1").checked) {
+                time = "早上";
+            } else {
+                time = "中午";
+            }
+
+            //判斷葷素
+            if (document.getElementById("check_mv1").checked == document.getElementById("check_mv2").checked) {
+                mv = -1;
+            } else if (document.getElementById("check_mv1").checked) {
+                mv = "葷";
+            } else {
+                mv = "素";
+            }
+            //判斷評價
+            star = parseInt(document.getElementById("check_star").value);
+            //判斷價位
+            price = parseInt(document.getElementById("check_price").value);
+
+            // console.clear();
+            // console.log(type, time, mv, star, price);
+
+
+            data_arr_result.length = 0;
+            //撈資料到data_arr_result
+            for (let i = 0; i < data_arr.length; i++) {
+                if (data_arr[i][2] == type || type == -1) {
+                    if (data_arr[i][3] == time || time == -1) {
+                        if (data_arr[i][4] == mv || mv == -1) {
+                            if (data_arr[i][6] >= star) {
+                                if (data_arr[i][7] <= price) {
+                                    data_arr_result.push(data_arr[i]);
+                                }
+                            }
+
+                        }
+                    }
+                }
+                if (data_arr[i][0] > 10000) {
+                    data_arr_result.push(data_arr[i]);
+                }
+            }
+            //清除area_list
+            while (area_list.hasChildNodes()) {
+                area_list.removeChild(area_list.firstChild);
+            }
+            //填充資料到area_list
+            //欄位名稱
+            var trobj = document.createElement("tr");
+            //名稱
+            var thobj = document.createElement("th");
+            var newlabel = document.createElement('label');
+            newlabel.innerHTML = "店家";
+            var newInput = document.createElement('input');
+            newInput.type = 'radio';
+            newInput.name = 'th_list';
+            var newdiv = document.createElement('div');
+            newInput.addEventListener('click', function () { sortTable(0); });
+            newlabel.appendChild(newInput);
+            newlabel.appendChild(newdiv);
+            thobj.appendChild(newlabel);
+            trobj.appendChild(thobj);
+            //類型
+            // thobj = document.createElement("th");
+            // thobj.innerHTML = "";
+            // trobj.appendChild(thobj);
+            //時段
+            thobj = document.createElement("th");
+            newlabel = document.createElement('label');
+            newlabel.innerHTML = "營業時段";
+            newInput = document.createElement('input');
+            newInput.type = 'radio';
+            newInput.name = 'th_list';
+            newdiv = document.createElement('div');
+            newInput.addEventListener('click', function () { sortTable(2); });
+            newlabel.appendChild(newInput);
+            newlabel.appendChild(newdiv);
+            thobj.appendChild(newlabel);
+            trobj.appendChild(thobj);
+            //葷素
+            // thobj = document.createElement("th");
+            // thobj.innerHTML = "";
+            // trobj.appendChild(thobj);
+            //評價
+            thobj = document.createElement("th");
+            newlabel = document.createElement('label');
+            newlabel.innerHTML = "評價";
+            newInput = document.createElement('input');
+            newInput.type = 'radio';
+            newInput.name = 'th_list';
+            newdiv = document.createElement('div');
+            newInput.addEventListener('click', function () { sortTable(3); });
+            newlabel.appendChild(newInput);
+            newlabel.appendChild(newdiv);
+            thobj.appendChild(newlabel);
+            trobj.appendChild(thobj);
+            //價位
+            thobj = document.createElement("th");
+            newlabel = document.createElement('label');
+            newlabel.innerHTML = "價位";
+            newInput = document.createElement('input');
+            newInput.type = 'radio';
+            newInput.name = 'th_list';
+            newdiv = document.createElement('div');
+            newInput.addEventListener('click', function () { sortTable(4); });
+            newlabel.appendChild(newInput);
+            newlabel.appendChild(newdiv);
+            thobj.appendChild(newlabel);
+            trobj.appendChild(thobj);
+
+            area_list.appendChild(trobj);
+            //欄位資料
+            for (let i = 0; i < data_arr_result.length; i++) {
+                var trobj = document.createElement("tr");
+                for (let j = 0; j < data_arr_result[i].length; j++) {
+                    if (j == 2 || j == 4 || j == 5 || j == 8) {
+                        continue;
+                    }
+                    var tdobj = document.createElement("td");
+                    if (j == 0) {
+                        tdobj.style.display = 'none';
+                    }
+                    if (j == 6) {
+                        for (let l = 0; l < data_arr_result[i][j]; l++) {
+                            tdobj.innerHTML += '<i class="fa-solid fa-star golden"></i>';
+                        }
+                    } else if (j == 7) {
+                        for (let l = 0; l < data_arr_result[i][j]; l++) {
+                            tdobj.innerHTML += '<i class="fa-solid fa-dollar-sign golden"></i>';
+                        }
+                    } else {
+                        tdobj.innerHTML = data_arr_result[i][j];
+                    }
+                    trobj.appendChild(tdobj);
+                }
+                newdiv = document.createElement("div");
+                newdiv.innerHTML += '<i class="fa-solid fa-square-minus"></i>';
+                newdiv.style.display = "none";
+                newdiv.className = "btn_delete";
+                trobj.appendChild(newdiv);
+
+                trobj.addEventListener('click', function () { get_store(this); });
+                area_list.appendChild(trobj);
+            }
+            // console.log(area_list);
+
+            // for (let i = 0; i < data_arr.length; i++) {
+            //     if (data_arr[i][3] == this.value) {
+            //         temp_arr.push(data_arr[i])
+            //     }
+            // }
+
+            // for (let i = 0; i < data_arr.length - 1; i++) {
+            //     if (data_arr[i][3].includes(this.value)) {
+            //         temp_arr.push(data_arr[i]);
+            //     }
+            // }
+            // console.table(data_arr_result);
+        }
+
+        function sortTable(n) {
+            var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+            table = document.getElementById("area_list");
+            switching = true;
+            //Set the sorting direction to ascending:
+            dir = "asc";
+            /*Make a loop that will continue until
+            no switching has been done:*/
+            while (switching) {
+                //start by saying: no switching is done:
+                switching = false;
+                rows = table.rows;
+                /*Loop through all table rows (except the
+                first, which contains table headers):*/
+                for (i = 1; i < (rows.length - 1); i++) {
+                    //start by saying there should be no switching:
+                    shouldSwitch = false;
+                    /*Get the two elements you want to compare,
+                    one from current row and one from the next:*/
+                    x = rows[i].getElementsByTagName("TD")[n];
+                    y = rows[i + 1].getElementsByTagName("TD")[n];
+                    /*check if the two rows should switch place,
+                    based on the direction, asc or desc:*/
+                    if (dir == "asc") {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            //if so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir == "desc") {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            //if so, mark as a switch and break the loop:
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+                if (shouldSwitch) {
+                    /*If a switch has been marked, make the switch
+                    and mark that a switch has been done:*/
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    //Each time a switch is done, increase this count by 1:
+                    switchcount++;
+                } else {
+                    /*If no switching has been done AND the direction is "asc",
+                    set the direction to "desc" and run the while loop again.*/
+                    if (switchcount == 0 && dir == "asc") {
+                        dir = "desc";
+                        switching = true;
+                    }
+                }
+            }
+        }
+
+        function get_store(row, arr = data_arr_result) {
+            let target = row.querySelector('td').innerHTML;
+            let left = 0;
+            let right = arr.length - 1;
+
+            while (left <= right) {
+                let mid = Math.floor((left + right) / 2);
+
+                if (arr[mid][0] === target) {
+                    console.table(arr[mid]);
+                    return mid; // 找到目标，返回索引
+                } else if (arr[mid][0] < target) {
+                    left = mid + 1; // 目标在右半部分
+                } else {
+                    right = mid - 1; // 目标在左半部分
+                }
+            }
+            return -1; // 没有找到目标，返回 -1
+        }
+
+        function set_list_delete_toggle(obj) {
+            var parentRect, childElement, childTop, childRight;
+            if (obj.classList.contains("list_delete")) {
+                obj.classList.remove("list_delete");
+
+                for (let i = 1; i < document.getElementById("area_list").rows.length; i++) {
+
+                    parentRect = document.getElementById("area_list").rows[i].getBoundingClientRect();
+                    childElement = document.getElementById("area_list").rows[i].querySelector(".btn_delete");
+                    childTop = parentRect.top;
+                    childRight = document.documentElement.clientWidth - parentRect.right;
+
+                    childElement.style.top = childTop + "px";
+                    childElement.style.right = childRight + "px";
+                    childElement.style.display = 'none';
+                    childElement.classList.remove("btn_delete_on")
+                }
+            } else {
+                obj.classList.add("list_delete");
+
+                for (let i = 1; i < document.getElementById("area_list").rows.length; i++) {
+
+                    parentRect = document.getElementById("area_list").rows[i].getBoundingClientRect();
+                    childElement = document.getElementById("area_list").rows[i].querySelector(".btn_delete");
+                    childTop = parentRect.top;
+                    childRight = document.documentElement.clientWidth - parentRect.right;
+
+                    childElement.style.top = childTop + "px";
+                    childElement.style.right = childRight + "px";
+                    childElement.style.display = 'block';
+                    childElement.classList.add("btn_delete_on");
+                }
+            }
+        }
+
+        function add_new_data(ui) {
+            if (wnd_store_add.querySelector("input").value.trim() === "") {
+                wnd_store_add.querySelector("label").classList.add("input_necessary");
+                wnd_store_add.querySelector(".text_hint").innerHTML = "請輸入店家名稱";
+                wnd_store_add.querySelector(".text_hint").style.color = "#FF0000";
+            } else {
+                if (data_arr[data_arr.length - 1][0] < 10000) {
+                    data_arr.push(["10001", wnd_store_add.querySelector("input").value, "", "", "", "", "", "", ""]);
+                } else {
+                    data_arr.push([(parseInt(data_arr[data_arr.length - 1][0]) + 1).toString(), wnd_store_add.querySelector("input").value, "", "", "", "", "", "", ""]);
+                }
+                // console.table(data_arr);
+                // console.log(data_arr.length);
+                fade_out(ui);
+                get_data();
+            }
+        }
+
+        function set_label_star(value) {
+            document.getElementById('label_star').innerHTML = '';
+            for (let i = 0; i < value; i++) {
+                document.getElementById('label_star').innerHTML += '<i class="fa-solid fa-star golden"></i>';
+            }
+        }
+        function set_label_price(value) {
+            document.getElementById('label_price').innerHTML = '';
+            for (let i = 0; i < value; i++) {
+                document.getElementById('label_price').innerHTML += '<i class="fa-solid fa-dollar-sign golden"></i>';
+            }
+        }
+        set_label_star(document.getElementById("check_star").value)
+        set_label_price(document.getElementById("check_price").value)
+
+        //獎勵視窗FADE
+
+        function initail_wnd_store_add() {
+            wnd_store_add.querySelector("label").classList.remove("input_necessary");
+            wnd_store_add.querySelector(".text_hint").style.color = "#FF000000";
+            for (let i = 0; i < wnd_store_add.querySelectorAll("input").length; i++) {
+                wnd_store_add.querySelectorAll("input")[i].value = "";
+            }
+        }
+
+        function fade_in(ui) {
+            ui.classList.add("ani_fade_in");
+            ui.style.display = 'block';
+            btn_back.style.display = 'block';
+
+            ui.addEventListener('animationend', function () {
+                if (ui.classList.contains("ani_fade_in")) {
+                    ui.classList.remove("ani_fade_in");
+                }
+            })
+        }
+
+        function fade_out(ui) {
+            // console.log(ui);
+            ui.classList.add("ani_fade_out");
+            ui.addEventListener('animationend', function () {
+                if (ui.classList.contains("ani_fade_out")) {
+                    ui.style.display = "none";
+                    btn_back.style.display = 'none';
+                    ui.classList.remove("ani_fade_out");
+                }
+            })
+        }
+
+        // ui.addEventListener("click", function () {
+        //     ui.classList.add("ani_fade_out");
+        // })
+
+        //一開始隱藏
+        wnd_confirm.style.display = "none";
+        btn_back.style.display = 'none';
+        trun_table.style.display = 'none';
+        wnd_store_add.style.display = "none";
+
+        //測試
+        // _wheel(10);
+    </script>
+</body>
+
+</html>
