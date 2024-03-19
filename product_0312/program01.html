@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>午餐吃什麼</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -22,7 +22,7 @@
             margin: 0;
             font-family: "Zen Kurenaido", sans-serif;
             background-color: #fff;
-            background-image: url('./bg.jpg');
+            background-image: url(./img/bg.jpg);
         }
 
         #trunTable {
@@ -38,12 +38,13 @@
             transform: translate(-50%, -50%);
             padding: 10px;
             border-radius: 50%;
-            background-color: #FF8C00E0;
+            border-color: #808080;
+            background-color: #fff;
             /* box-shadow: 0 1px 5px rgba(0, 0, 0, .5); */
-            color: black;
             cursor: pointer;
             height: 200px;
             width: 200px;
+            overflow: hidden;
         }
 
         .animated {
@@ -488,7 +489,7 @@
 
         header {
             /* background-color: #fff; */
-            background-image: url(./bg.jpg);
+            background-image: url(./img/bg.jpg);
             height: 60px;
             border-bottom: 1px solid black;
             position: sticky;
@@ -497,7 +498,7 @@
         }
 
         footer {
-            background-image: url(./bg.jpg);
+            background-image: url(./img/bg.jpg);
             background-color: #fff;
             height: 60px;
             border-top: 1px solid black;
@@ -655,6 +656,186 @@
             color: red;
             animation: shake 0.5s linear infinite;
         }
+
+        .area_contact label {
+            position: relative;
+            left: 20%;
+            display: block;
+            width: 100%;
+            font-size: 24px;
+            padding-top: 10px;
+        }
+
+        .area_contact label::before {
+            content: "*";
+            margin-left: -10px;
+            color: #FF0000;
+        }
+
+        .area_contact select {
+            position: relative;
+            text-align: center;
+            width: 60%;
+            height: 30px;
+            font-size: 18px;
+            /* margin-left: 5%; */
+        }
+
+        .area_contact [type=text],
+        [type=tel],
+        [type=email] {
+            position: relative;
+            width: 60%;
+            font-size: 18px;
+        }
+
+        .area_contact textarea {
+            position: relative;
+            width: 60%;
+            font-size: 18px;
+        }
+
+        .area_contact [type=button] {
+            position: relative;
+            width: 20%;
+            font-size: 24px;
+            left: 60%;
+            background-color: #FF8C00;
+            border: 0px;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+
+        .area_contact p {
+            position: relative;
+            width: 20%;
+            left: 60%;
+            text-align: right;
+            color: #FF0000;
+            font-size: 18px;
+            padding: 0;
+            display: none;
+        }
+
+        .contact_thank {
+            text-align: center;
+            margin: 10% 20% 10% 20%;
+            font-size: 36px;
+            display: none;
+        }
+
+        .area_about {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            z-index: 50;
+            background-color: #1f1f1f;
+        }
+
+        #mycanvas {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .trapezoid {
+            position: absolute;
+            display: block;
+            /* padding: .5em 1em; */
+            top: 20%;
+            left: 35%;
+            width: 30%;
+            height: 30%;
+            color: white;
+            background: #84071500;
+            transform: perspective(.5em) rotateX(2deg);
+            transition: 10s;
+            scroll-snap-align: start;
+            overflow: hidden;
+        }
+
+        .scroll {
+            animation: scrollAnimation 10s linear forwards;
+        }
+
+        .trapezoid p::-webkit-scrollbar {
+            display: none;
+        }
+
+        .trapezoid p {
+            width: 100%;
+            height: 100%;
+            font-size: 20px;
+            top: 50%;
+            padding: 0;
+            /* padding-bottom: 50%; */
+            text-align: center;
+            /* overflow-y: scroll; */
+            transform: translateY(0%);
+        }
+
+        @keyframes scrollAnimation {
+            0% {
+                transform: translateY(0%);
+            }
+
+            /* 开始位置：顶部 */
+            100% {
+                transform: translateY(-600%);
+            }
+
+            /* 结束位置：底部 */
+        }
+
+        #trunButton p{
+            color: #000;
+            font-size: 32px;
+            text-align: center;
+            padding: 0;
+            width: 100%;
+        }
+
+        .wave {
+            background: #FF8C00;
+            width: 170%;
+            height: 170%;
+            border-radius: 40%;
+            opacity: 0.4;
+            position: absolute;
+            top: 8%;
+            left: 90%;
+            margin-left: -250px;
+            margin-top: -250px;
+            transform-origin: center;
+            animation: drift 7s infinite linear;
+
+            &:nth-child(1) {
+                animation: drift 9s infinite linear;
+            }
+
+            &:nth-child(2) {
+                animation: drift 11s infinite linear;
+                opacity: 0.1;
+                background-color: #777;
+            }
+        }
+
+        @keyframes drift {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 
@@ -678,14 +859,19 @@
                 <input type="radio" name="toggle_menu" style="display: none;">
             </label>
         </div>
-        <div class="btn_about "><i class="fa-regular fa-circle-question"></i></div>
+        <div class="btn_about" onclick="about_start()"><i class="fa-regular fa-circle-question"></i></div>
     </header>
     <!-- <p id="_login"></p> -->
     <!-- <input type="text" id="_input" autocomplete="off">輸入 -->
     <div class="container" id="trunTable">
         <canvas id="myCanvas" width="500" height="500" style="border:1px solid #d3d3d300;">
             Your browser does not support the HTML canvas tag.</canvas>
-        <button id="trunButton">START</button>
+        <button id="trunButton">
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <div class="wave"></div>
+            <p>START</p>
+        </button>
     </div>
 
     <div id="btn_back"></div>
@@ -790,6 +976,83 @@
 
     <!-- 店家清單 -->
     <table id="area_list" class="container"></table>
+
+    <!-- 聯絡我們 -->
+    <form class="area_contact container">
+        <label>
+            問題類型
+            <br>
+            <select>
+                <option value="0" selected disabled hidden>請選擇</option>
+                <option value="1">資料問題</option>
+                <option value="2">操作問題</option>
+                <option value="3">機率問題</option>
+                <option value="4">其他</option>
+            </select>
+        </label>
+        <label>
+            姓名
+            <br>
+            <input type="text"></label>
+        <label>
+            電話
+            <br>
+            <input type="tel"></label>
+        <label>
+            Email
+            <br>
+            <input type="email"></label>
+        <label>
+            問題與建議
+            <br>
+            <textarea cols="30" rows="10"></textarea>
+        </label>
+        <p></p>
+        <input type="button" value="發送" onclick="send_contact()">
+    </form>
+    <div class="contact_thank">感謝回覆！</div>
+
+    <!--  關於我們 -->
+    <div class="area_about" onclick="about_end()">
+        <canvas id="mycanvas"></canvas>
+        <div class="trapezoid" id="scrollContainer">
+            <p>
+                <br><br><br><br><br><br><br><br><br><br>
+                擺脫午餐選擇困擾的轉盤幫手
+                <br>
+                <br>
+                每天中午，你是否也面臨著這樣一個問題：要吃什麼呢？放心吧，現在有了解決這個問題的新利器——午餐轉盤！這個簡單而實用的工具將幫助你輕鬆解決午餐選擇困擾。
+                <br>
+                <br>
+                忘卻選擇焦慮
+                <br>
+                <br>
+                擁有午餐轉盤，不再需要花費寶貴的時間和精力在每天午餐的選擇上。你不再需要煩惱要吃什麼，因為午餐轉盤將會替你做出決定。只需輕輕一轉，就能知道今天的午餐是什麼！
+                <br>
+                <br>
+                客製化選項
+                <br>
+                <br>
+                午餐轉盤並不僅僅是一個固定的選擇列表。你可以根據自己的口味和喜好進行設置。你可以輕鬆地篩選設定轉盤上店家的資料筆數，確保它們符合你的喜好。而且，你還可以根據自己的需求新增或刪除店家資料，確保轉盤上的選擇始終保持新鮮多樣。
+                <br>
+                <br>
+                輕鬆操作
+                <br>
+                <br>
+                午餐轉盤設計簡單易用，無需任何複雜的操作。只需打開應用程式或網頁，輕輕一按即可開始使用。而且，它適用於各種設備，無論是在家中的電腦還是外出的手機上，都能輕鬆使用。
+                <br>
+                <br>
+                解放自己的選擇
+                <br>
+                <br>
+                午餐轉盤不僅僅是一個實用的工具，更是一種解放自己的方式。它讓你不再受困於選擇，不再為午餐而煩惱。讓午餐轉盤成為你的幫手，讓你的午餐時間更加輕鬆愉快！
+                <br><br><br><br><br><br><br><br><br><br>
+                START
+                <br><br><br>
+                &nbsp
+            </p>
+        </div>
+    </div>
     <footer>
         <div class="container">
             <p>Copyright &copy;</p>
@@ -797,7 +1060,7 @@
     </footer>
     <!-- JS -->
     <script>
-        
+
         //變數宣告
         //介面相關變數
         var btn = document.getElementById("trunButton");
@@ -808,6 +1071,10 @@
         var toggle_roulette = document.querySelector(".btn_roulette");
         var toggle_contact = document.querySelector(".btn_contact");
         var icon_filter = document.querySelector(".icon_filter");
+        var area_contact = document.querySelector(".area_contact");
+        var contact_thank = document.querySelector(".contact_thank");
+        var area_about = document.querySelector(".area_about");
+        var trapezoid = document.querySelector(".trapezoid");
         // var _login = document.getElementById("_login");
         // var _input = document.getElementById("_input");
 
@@ -835,9 +1102,10 @@
 
         //繪製輪盤
         function _wheel(num) {
-            var radius = window.innerWidth*0.4/2;
-            trun_table.querySelector("canvas").width=radius*2;
-            trun_table.querySelector("canvas").height=radius*2;
+            var radius = ((window.innerWidth * 0.4 / 2) < 250) ? 250 : window.innerWidth * 0.4 / 2;
+
+            trun_table.querySelector("canvas").width = radius * 2;
+            trun_table.querySelector("canvas").height = radius * 2;
 
             _wheel_num = num;
             var deg = 1 / num * 360;
@@ -877,7 +1145,7 @@
                 } else {
                     ctx.fillStyle = '#000000';
                 }
-                
+
                 // if (i % 5 == 0 || i%5 == 3) {
                 // } else{
                 //     ctx.fillStyle = '#fff';
@@ -889,7 +1157,7 @@
                 // 恢复前一个状态
                 ctx.restore();
             }
-            
+
         }
 
         //點擊按鈕增加class & 亂數
@@ -918,17 +1186,19 @@
             // console.log(data_arr_result[(_wheel_num - 1 - Math.floor(_reward_deg / (360 / _wheel_num)))][1]);
             this.classList.remove("animated");
             this.style.transform = "rotate(" + _temp_0per + "deg)";
-            _wheel_is_start = false;
 
             //顯示獎勵視窗
             wheel_result(data_arr_result[(_wheel_num - 1 - Math.floor(_reward_deg / (360 / _wheel_num)))][1]);
-
+            confirm_type = "info";
+            set_store_data(data_arr_result[(_wheel_num - 1 - Math.floor(_reward_deg / (360 / _wheel_num)))]);
         })
 
         async function wheel_result(result) {
             await delay(300);
             fade_in(wnd_confirm);
-            set_confirm(0, "今天吃甚麼", "就決定吃" + result + "吧");
+            set_confirm(0, "今天吃甚麼", "就決定吃" + result + "吧", "查看");
+            _wheel_is_start = false;
+
         }
         //延遲顯示轉盤結果
         function delay(time) {
@@ -962,7 +1232,7 @@
         xhr.onload = function () {
             ReadFile(xhr.responseText);
         }
-        xhr.open("get", "店家表.txt", true);
+        xhr.open("get", "./data/店家表.txt", true);
         xhr.send();
 
         function get_data() {
@@ -1377,17 +1647,19 @@
             }
         }
 
-        function set_confirm(type, text_title, text_content) {
+        function set_confirm(type, text_title, text_content, text_confirm = "確定") {
             if (type == 0) {
                 wnd_confirm.querySelector(".btn_cancel").style.display = "block";
-                wnd_confirm.querySelector(".btn_confirm").style.display = "block";
                 wnd_confirm.querySelector(".btn_cancel").style.left = "15%";
+                wnd_confirm.querySelector(".btn_confirm").style.display = "block";
                 wnd_confirm.querySelector(".btn_confirm").style.left = "55%";
+                wnd_confirm.querySelector(".btn_confirm").innerHTML = text_confirm;
 
             } else if (type == 1) {
                 wnd_confirm.querySelector(".btn_cancel").style.display = "none";
                 wnd_confirm.querySelector(".btn_confirm").style.display = "block";
                 wnd_confirm.querySelector(".btn_confirm").style.left = "35%";
+                wnd_confirm.querySelector(".btn_confirm").innerHTML = text_confirm;
             } else {
                 wnd_confirm.querySelector(".btn_cancel").style.display = "none";
                 wnd_confirm.querySelector(".btn_confirm").style.display = "none";
@@ -1399,7 +1671,7 @@
             wnd_confirm.querySelector(".text_content").style.top = "15%";
         }
 
-        function confirm_event() {
+        async function confirm_event() {
             switch (confirm_type) {
                 case "delete":
                     // console.log("test");
@@ -1411,28 +1683,57 @@
                         toggle_delete.classList.remove("list_delete");
                     }
                     break;
-
+                case "info":
+                    await delay(300);
+                    fade_in(wnd_store_info);
+                    break;
                 default:
                     break;
             }
         }
 
+        //頁面切換
         function toggle_menu_display() {
             icon_filter.querySelector("input").checked = false;
+            area_about.querySelector("p").classList.remove("scroll");
+
+            area_list.style.display = "none";
+            icon_filter.style.display = "none";
+            trun_table.style.display = "none";
+            area_contact.style.display = "none";
+            contact_thank.style.display = "none";
+            area_about.style.display = "none";
+
+            // 聯絡表單初始化
+            area_contact.querySelector("select").value = 0;
+            area_contact.querySelector("[type=text]").value = "";
+            area_contact.querySelector("[type=tel]").value = "";
+            area_contact.querySelector("[type=email]").value = "";
+            area_contact.querySelector("textarea").value = "";
+
             if (toggle_list.querySelector("input").checked) {
                 area_list.style.display = "block";
                 icon_filter.style.display = "block";
-                trun_table.style.display = "none";
             } else if (toggle_roulette.querySelector("input").checked) {
-                area_list.style.display = "none";
-                icon_filter.querySelector("input").checked = false;
-                icon_filter.style.display = "none";
                 trun_table.style.display = "block";
             } else if (toggle_contact.querySelector("input").checked) {
-                area_list.style.display = "none";
-                icon_filter.style.display = "none";
-                trun_table.style.display = "none";
+                area_contact.style.display = "block";
+            } else {
+                area_about.style.display = "block";
+                area_about.querySelector("p").classList.add("scroll");
             }
+        }
+
+        function about_end() {
+            toggle_roulette.querySelector("input").checked = true;
+            toggle_menu_display();
+        }
+
+        function about_start() {
+            toggle_list.querySelector("input").checked = false;
+            toggle_roulette.querySelector("input").checked = false;
+            toggle_contact.querySelector("input").checked = false;
+            toggle_menu_display();
         }
 
         //週期觸發幻燈片
@@ -1462,6 +1763,42 @@
                     pic.querySelectorAll("img")[i].classList.add("store_pic_transition");
                     pic.querySelectorAll("img")[i].classList.add("store_pic_mid");
                 }
+            }
+        }
+
+        function send_contact() {
+            var type, name, tel, email, adv, hint;
+            type = area_contact.querySelector("select").value;
+            name = area_contact.querySelector("[type=text]").value;
+            tel = area_contact.querySelector("[type=tel]").value;
+            email = area_contact.querySelector("[type=email]").value;
+            adv = area_contact.querySelector("textarea").value;
+            hint = area_contact.querySelector("p");
+            console.log(type);
+            console.log(name);
+            console.log(tel);
+            console.log(email);
+            console.log(adv);
+            console.log(hint);
+
+            if (type == 0) {
+                hint.style.display = "block";
+                hint.innerHTML = "請選擇問題類型";
+            } else if (name == "") {
+                hint.style.display = "block";
+                hint.innerHTML = "請輸入姓名";
+            } else if (tel == "") {
+                hint.style.display = "block";
+                hint.innerHTML = "請輸入電話";
+            } else if (email == "") {
+                hint.style.display = "block";
+                hint.innerHTML = "請輸入Email";
+            } else if (adv == "") {
+                hint.style.display = "block";
+                hint.innerHTML = "請輸入問題與建議";
+            } else {
+                area_contact.style.display = "none";
+                contact_thank.style.display = "block";
             }
         }
 
@@ -1524,8 +1861,80 @@
         wnd_store_add.style.display = "none";
         wnd_store_info.style.display = "none";
         area_list.style.display = 'none';
+        icon_filter.style.display = 'none';
+        area_contact.style.display = 'none';
 
+        window.onload = function () {
+            var scrollContainer = document.getElementById('scrollContainer').querySelector("p");
+            scrollContainer.classList.add('scroll');
+        };
 
+        function particle_paint() {
+            // 获取 Canvas 元素和上下文
+            const canvas = document.getElementById('mycanvas');
+            const ctx = canvas.getContext('2d');
+
+            // 设置 Canvas 大小
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            // 定义粒子类
+            class Particle {
+                constructor(x, y, dx, dy, color, radius) {
+                    this.x = x;
+                    this.y = y;
+                    this.dx = dx;
+                    this.dy = dy;
+                    this.color = color;
+                    this.radius = radius;
+                }
+
+                // 更新粒子位置
+                update() {
+                    this.x += this.dx;
+                    this.y += this.dy;
+                    if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+                        this.dx = -this.dx;
+                    }
+                    if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+                        this.dy = -this.dy;
+                    }
+                    this.draw();
+                }
+
+                // 绘制粒子
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                    ctx.closePath();
+                }
+            }
+
+            // 生成粒子群
+            const particles = [];
+            for (let i = 0; i < 100; i++) {
+                const radius = Math.random() * 3 + 1;
+                const x = Math.random() * (canvas.width - radius * 2) + radius;
+                const y = Math.random() * (canvas.height - radius * 2) + radius;
+                const dx = (Math.random() - 0.5) * 2;
+                const dy = (Math.random() - 0.5) * 2;
+                const color = 'rgba(255, 255, 255, 0.8)';
+                particles.push(new Particle(x, y, dx, dy, color, radius));
+            }
+
+            // 动画循环
+            function particle_animate() {
+                requestAnimationFrame(particle_animate);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(particle => {
+                    particle.update();
+                });
+            }
+            particle_animate();
+        }
+        particle_paint();
 
         //測試
         // _wheel(10);
