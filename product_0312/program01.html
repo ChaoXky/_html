@@ -661,7 +661,7 @@
             position: relative;
             left: 20%;
             display: block;
-            width: 100%;
+            width: 60%;
             font-size: 24px;
             padding-top: 10px;
         }
@@ -675,7 +675,7 @@
         .area_contact select {
             position: relative;
             text-align: center;
-            width: 60%;
+            width: 100%;
             height: 30px;
             font-size: 18px;
             /* margin-left: 5%; */
@@ -685,13 +685,13 @@
         [type=tel],
         [type=email] {
             position: relative;
-            width: 60%;
+            width: 100%;
             font-size: 18px;
         }
 
         .area_contact textarea {
             position: relative;
-            width: 60%;
+            width: 100%;
             font-size: 18px;
         }
 
@@ -788,13 +788,13 @@
 
             /* 开始位置：顶部 */
             100% {
-                transform: translateY(-600%);
+                transform: translateY(-430%);
             }
 
             /* 结束位置：底部 */
         }
 
-        #trunButton p{
+        #trunButton p {
             color: #000;
             font-size: 32px;
             text-align: center;
@@ -1793,10 +1793,14 @@
             } else if (email == "") {
                 hint.style.display = "block";
                 hint.innerHTML = "請輸入Email";
+            } else if (!email.includes("@")) {
+                hint.style.display = "block";
+                hint.innerHTML = "Email格式錯誤";
             } else if (adv == "") {
                 hint.style.display = "block";
                 hint.innerHTML = "請輸入問題與建議";
-            } else {
+            }
+            else {
                 area_contact.style.display = "none";
                 contact_thank.style.display = "block";
             }
